@@ -1,0 +1,4 @@
+name: BedRespawn
+version: ${project.version}
+main: net.lapismc.bedrespawn.BedRespawn
+authors: [Dart2112]

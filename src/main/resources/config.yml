@@ -1,0 +1,8 @@
+Messages:
+  onPlace:
+    BedSpawnCreated: "Your bed spawn has been created, You will continue to respawn here until the bed is broken"
+    OtherSpawnExists: "Your bed spawn hasn't been set as you have another bed spawn set, break that bed to set a new spawn"
+  onBreak: "Your bed has been broken, as a result you will no longer respawn there"
+  onRespawn:
+    toBed: "You have been respawned at your bed"
+    noBed: "You don't have a bed placed for a respawn point, place one to respawn there in the future"
