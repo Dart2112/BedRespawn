@@ -106,7 +106,7 @@ public final class BedRespawn extends JavaPlugin implements Listener {
 
     private Bed getPlayersBed(Block b) {
         for (Bed bed : beds) {
-            if (bed.getBedLocation().equals(b.getLocation())) {
+            if (bed.checkBedLocation(b.getLocation())) {
                 return bed;
             }
         }

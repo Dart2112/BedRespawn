@@ -2,6 +2,7 @@ package net.lapismc.bedrespawn;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 
 import java.util.UUID;
 
@@ -22,7 +23,11 @@ class Bed {
     }
 
     Location getBedLocation() {
-        return bedLocation;
+        return getBedHeadLocation(bedLocation);
+    }
+
+    boolean checkBedLocation(Location loc) {
+        return getBedLocation().equals(getBedHeadLocation(loc));
     }
 
     UUID getOwnerUUID() {
@@ -35,5 +40,14 @@ class Bed {
         }
         plugin.beds.remove(this);
         plugin.saveBeds();
+    }
+
+    private Location getBedHeadLocation(Location bedLocation) {
+        org.bukkit.material.Bed b = (org.bukkit.material.Bed) bedLocation.getBlock();
+        if (b.isHeadOfBed()) {
+            return (((Block) b).getRelative(b.getFacing())).getLocation();
+        } else {
+            return (((Block) b).getRelative(b.getFacing().getOppositeFace())).getLocation();
+        }
     }
 }
