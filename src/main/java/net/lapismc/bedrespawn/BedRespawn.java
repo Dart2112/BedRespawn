@@ -7,6 +7,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -57,16 +58,20 @@ public final class BedRespawn extends JavaPlugin implements Listener {
     public void onBlockPlace(BlockPlaceEvent e) {
         if (isBed(e.getBlock())) {
             if (!doesPlayerHaveBed(e.getPlayer().getUniqueId())) {
-                beds.add(new Bed(this, e.getPlayer().getUniqueId(), e.getBlock().getLocation()));
-                saveBeds();
-                e.getPlayer().sendMessage(getMessage("onPlace.BedSpawnCreated"));
+                Bukkit.getScheduler().runTaskLater(this, () -> {
+                    if (isBed(e.getBlock().getLocation().getBlock())) {
+                        beds.add(new Bed(this, e.getPlayer().getUniqueId(), e.getBlock().getLocation()));
+                        saveBeds();
+                        e.getPlayer().sendMessage(getMessage("onPlace.BedSpawnCreated"));
+                    }
+                }, 20);
             } else {
                 e.getPlayer().sendMessage(getMessage("onPlace.OtherSpawnExists"));
             }
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent e) {
         if (isBed(e.getBlock())) {
             if (isPlayerBed(e.getBlock())) {

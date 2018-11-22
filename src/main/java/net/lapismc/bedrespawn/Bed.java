@@ -27,7 +27,11 @@ class Bed {
     }
 
     boolean checkBedLocation(Location loc) {
-        return getBedLocation().equals(getBedHeadLocation(loc));
+        try {
+            return getBedLocation().equals(getBedHeadLocation(loc));
+        } catch (ClassCastException e) {
+            return false;
+        }
     }
 
     UUID getOwnerUUID() {
