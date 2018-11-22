@@ -80,7 +80,7 @@ public final class BedRespawn extends JavaPlugin implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerRespawn(PlayerRespawnEvent e) {
         if (doesPlayerHaveBed(e.getPlayer().getUniqueId())) {
             Location bedLocation = Objects.requireNonNull(getPlayersBed(e.getPlayer().getUniqueId())).getBedLocation();
